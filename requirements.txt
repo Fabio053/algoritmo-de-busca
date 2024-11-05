@@ -2,10 +2,3 @@ streamlit
 selenium
 webdriver-manager
 pandas
-uvicorn
-gunicorn
-chromedriver-autoinstaller
-requests
-Flask
-chromium-browser
-chromedriver

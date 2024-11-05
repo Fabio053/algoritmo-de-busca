@@ -6,7 +6,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
-import chromedriver_autoinstaller
+from webdriver_manager.chrome import ChromeDriverManager  # Para gerenciar o ChromeDriver
 import datetime
 
 # Configurando as palavras-chave
@@ -33,10 +33,8 @@ def busca_noticias(palavra_chave, data_inicio, data_fim):
     options.add_argument("--no-sandbox")  # Necessário em alguns ambientes
     options.add_argument("--disable-dev-shm-usage")  # Necessário em alguns ambientes
 
-    # Instalar automaticamente o ChromeDriver correto
-    chromedriver_autoinstaller.install()
-
-    driver = webdriver.Chrome(service=Service(), options=options)
+    # Usa o WebDriver Manager para obter o ChromeDriver correto
+    driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
     # Formatar as datas
     data_inicio_formato = data_inicio.strftime('%Y-%m-%d')
