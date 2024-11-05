@@ -7,6 +7,7 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 import chromedriver_autoinstaller
+import datetime
 
 # Configurando as palavras-chave
 palavras_chave = [
@@ -31,16 +32,17 @@ def busca_noticias(palavra_chave, data_inicio, data_fim):
     options.add_argument("--headless")  # Executa o navegador em segundo plano
     options.add_argument("--no-sandbox")  # Necessário em alguns ambientes
     options.add_argument("--disable-dev-shm-usage")  # Necessário em alguns ambientes
-    # Se o Chrome não estiver no PATH, você pode definir o caminho aqui:
-    # options.binary_location = "/usr/bin/google-chrome"  # ajuste conforme necessário
 
-    chromedriver_autoinstaller.install()  # Isso tenta instalar a versão correta do ChromeDriver
+    # Instalar automaticamente o ChromeDriver correto
+    chromedriver_autoinstaller.install()
 
     driver = webdriver.Chrome(service=Service(), options=options)
 
+    # Formatar as datas
     data_inicio_formato = data_inicio.strftime('%Y-%m-%d')
     data_fim_formato = data_fim.strftime('%Y-%m-%d')
 
+    # Construir a consulta de pesquisa
     sites_query = " OR ".join(SITES_ADICIONAIS)
     url = f'https://www.google.com/search?q={palavra_chave}+notícias+after:{data_inicio_formato}+before:{data_fim_formato}+{sites_query}&hl=pt'
     
@@ -84,11 +86,15 @@ def busca_noticias(palavra_chave, data_inicio, data_fim):
 # Interface no Streamlit
 st.title("Busca de Notícias")
 
+# Selecione as palavras-chave
 palavras_selecionadas = st.multiselect("Selecione as palavras-chave:", palavras_chave)
 nova_palavra = st.text_input("Adicione uma nova palavra-chave (opcional):")
-data_inicio = st.date_input("Data de Início", pd.to_datetime("2024-01-01"))
-data_fim = st.date_input("Data de Fim", pd.to_datetime("2024-12-31"))
 
+# Selecione o intervalo de datas
+data_inicio = st.date_input("Data de Início", datetime.date(2024, 1, 1))
+data_fim = st.date_input("Data de Fim", datetime.date(2024, 12, 31))
+
+# Botão de busca
 if st.button("Buscar Notícias"):
     if nova_palavra:
         palavras_selecionadas.append(nova_palavra)
