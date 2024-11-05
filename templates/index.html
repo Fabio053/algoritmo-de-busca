@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Busca de Notícias</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <!-- CSS do Select2 para um dropdown melhorado -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/css/select2.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <h1 class="mt-5">Busca de Notícias</h1>
+        <form method="post" class="mt-4">
+            <!-- Menu de seleção múltipla com Select2 -->
+            <div class="form-group">
+                <label for="palavras">Selecione as palavras-chave:</label>
+                <select name="palavras" id="palavras" class="form-control select2" multiple>
+                    {% for palavra in palavras %}
+                        <option value="{{ palavra }}">{{ palavra }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="text" name="nova_palavra" class="form-control" placeholder="Adicione uma nova palavra-chave (opcional)">
+            </div>
+            <div class="form-group">
+                <label for="data_inicio">Data de Início:</label>
+                <input type="date" name="data_inicio" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="data_fim">Data de Fim:</label>
+                <input type="date" name="data_fim" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Buscar Notícias</button>
+        </form>
+
+        {% if dados %}
+            <h2 class="mt-5">Resultados:</h2>
+            <ul class="list-group">
+                {% for noticia in dados %}
+                    <li class="list-group-item">
+                        <strong>{{ noticia['Título'] }}</strong>: <a href="{{ noticia['Link'] }}" target="_blank">{{ noticia['Link'] }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+        
+        {% if mensagens %}
+            <div class="alert alert-danger mt-4">
+                <ul>
+                    {% for mensagem in mensagens %}
+                        <li>{{ mensagem }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+    <br>
+
+    <!-- JS do Select2 para melhorar o dropdown -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+    <script>
+        // Inicializa o Select2
+        $(document).ready(function() {
+            $('.select2').select2({
+                placeholder: "Selecione as palavras-chave",
+                allowClear: true
+            });
+        });
+    </script>
+</body>
+</html>

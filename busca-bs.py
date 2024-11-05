@@ -13,14 +13,6 @@ palavras_chave = [
     'eldorado santos', 'eucalipto', 'caminhoes', 'hexatrens', 'rodovia'
 ]
 
-# Lista de sites adicionais para pesquisa
-SITES_ADICIONAIS = [
-    'site:portalcelulose.com.br',
-    'site:portosenavios.com.br',
-    'site:clickpetroleoegas.com.br',
-    'site:g1.globo.com',
-]
-
 # Função para buscar notícias no Google News
 def busca_noticias(palavra_chave, data_inicio, data_fim):
     # Formatar as datas
@@ -40,7 +32,7 @@ def busca_noticias(palavra_chave, data_inicio, data_fim):
     soup = BeautifulSoup(response.text, 'html.parser')
     noticias = []
     
-    # Selecionar artigos
+    # Selecionar artigos usando o seletor correto para Google News
     resultados = soup.find_all('article')
 
     for result in resultados:
@@ -52,12 +44,11 @@ def busca_noticias(palavra_chave, data_inicio, data_fim):
                 titulo = titulo_element.text
                 link = link_element['href']
 
-                if link and "google" not in link:
-                    # Ajustando o link caso ele seja relativo
-                    if link.startswith('./'):
-                        link = 'https://news.google.com' + link[1:]
+                # Ajustando o link caso ele seja relativo
+                if link.startswith('.'):
+                    link = 'https://news.google.com' + link[1:]
 
-                    noticias.append({"Título": titulo, "Link": link})
+                noticias.append({"Título": titulo, "Link": link})
         except Exception as e:
             st.error(f"Erro ao processar o resultado: {str(e)}")
             continue

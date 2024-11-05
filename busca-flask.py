@@ -1,20 +1,25 @@
-import streamlit as st
+from flask import Flask, render_template, request
 from selenium.webdriver.support import expected_conditions as EC
-import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 import chromedriver_autoinstaller
+import pandas as pd
+from datetime import datetime
+
+app = Flask(__name__)
 
 # Configurando as palavras-chave
 palavras_chave = [
     'safra', 'madeira', 'celulose', 'bracell',
-    'exportação', 'safra', 'suzano', 'hidrovia', 'ferrovia', 'Combustível', 'custo de frete',
-    'eldorado Mato Grosso do Sul', 'rota celulose',
-    'ribas do rio pardo suzano', 'terminal intermodal pederneiras', 'hidrovia tiete',
-    'eldorado santos', 'eucalipto', 'caminhoes', 'hexatrens', 'rodovia'
+    'exportação', 'safra', 'suzano', 'hidrovia', 'ferrovia', 
+    'Combustível', 'custo de frete', 'eldorado Mato Grosso do Sul', 
+    'rota celulose', 'ribas do rio pardo suzano', 
+    'terminal intermodal pederneiras', 'hidrovia tiete', 
+    'eldorado santos', 'eucalipto', 'caminhoes', 
+    'hexatrens', 'rodovia'
 ]
 
 # Lista de sites adicionais para pesquisa
@@ -31,8 +36,6 @@ def busca_noticias(palavra_chave, data_inicio, data_fim):
     options.add_argument("--headless")  # Executa o navegador em segundo plano
     options.add_argument("--no-sandbox")  # Necessário em alguns ambientes
     options.add_argument("--disable-dev-shm-usage")  # Necessário em alguns ambientes
-    # Se o Chrome não estiver no PATH, você pode definir o caminho aqui:
-    # options.binary_location = "/usr/bin/google-chrome"  # ajuste conforme necessário
 
     chromedriver_autoinstaller.install()  # Isso tenta instalar a versão correta do ChromeDriver
 
@@ -52,16 +55,14 @@ def busca_noticias(palavra_chave, data_inicio, data_fim):
         )
     except Exception as e:
         driver.quit()  # Fechar o navegador em caso de erro
-        st.error(f"Erro ao buscar notícias para '{palavra_chave}': {str(e)}")
-        return []
+        return {"error": f"Erro ao buscar notícias para '{palavra_chave}': {str(e)}"}
 
     noticias = []
     resultados = driver.find_elements(By.CSS_SELECTOR, 'div.g')
 
     if not resultados:
-        st.warning(f"Nenhum resultado encontrado para '{palavra_chave}'.")
         driver.quit()
-        return [] 
+        return {"warning": f"Nenhum resultado encontrado para '{palavra_chave}'."}
 
     for result in resultados:
         try:
@@ -75,35 +76,36 @@ def busca_noticias(palavra_chave, data_inicio, data_fim):
                 if link and "google" not in link:
                     noticias.append({"Título": titulo, "Link": link})
         except Exception as e:
-            st.error(f"Erro ao processar o resultado: {str(e)}")
             continue
 
     driver.quit()
     return noticias
 
-# Interface no Streamlit
-st.title("Busca de Notícias")
+@app.route('/', methods=['GET', 'POST'])
+def index():
+    if request.method == 'POST':
+        palavras_selecionadas = request.form.getlist('palavras')
+        nova_palavra = request.form.get('nova_palavra', '')
+        data_inicio = request.form.get('data_inicio')
+        data_fim = request.form.get('data_fim')
 
-palavras_selecionadas = st.multiselect("Selecione as palavras-chave:", palavras_chave)
-nova_palavra = st.text_input("Adicione uma nova palavra-chave (opcional):")
-data_inicio = st.date_input("Data de Início", pd.to_datetime("2024-01-01"))
-data_fim = st.date_input("Data de Fim", pd.to_datetime("2024-12-31"))
+        if nova_palavra:
+            palavras_selecionadas.append(nova_palavra)
 
-if st.button("Buscar Notícias"):
-    if nova_palavra:
-        palavras_selecionadas.append(nova_palavra)
+        if palavras_selecionadas and data_inicio and data_fim:
+            data_inicio = datetime.strptime(data_inicio, '%Y-%m-%d')
+            data_fim = datetime.strptime(data_fim, '%Y-%m-%d')
+            dados = []
 
-    if palavras_selecionadas:
-        dados = []
-        for palavra in palavras_selecionadas:
-            noticias = busca_noticias(palavra, data_inicio, data_fim)
-            dados.extend(noticias)
+            for palavra in palavras_selecionadas:
+                noticias = busca_noticias(palavra, data_inicio, data_fim)
+                if isinstance(noticias, dict) and "error" in noticias:
+                    return render_template('index.html', palavras=palavras_chave, mensagens=[noticias["error"]])
+                dados.extend(noticias)
 
-        if dados:
-            df = pd.DataFrame(dados)
-            for index, row in df.iterrows():
-                st.markdown(f"- **{row['Título']}**: [Link]({row['Link']})")
-        else:
-            st.write("Nenhuma notícia encontrada.")
-    else:
-        st.warning("Por favor, selecione pelo menos uma palavra-chave.")
+            return render_template('index.html', palavras=palavras_chave, dados=dados)
+
+    return render_template('index.html', palavras=palavras_chave, dados=[])
+
+if __name__ == '__main__':
+    app.run(debug=True)
