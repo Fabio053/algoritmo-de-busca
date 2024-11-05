@@ -6,4 +6,8 @@ uvicorn
 gunicorn
 chromedriver-autoinstaller
 requests 
+<<<<<<< HEAD
 beautifulsoup4
+=======
+beautifulsoup4
+>>>>>>> dc2e70609daf2e427216dac88860f1ab3f76ba7c
