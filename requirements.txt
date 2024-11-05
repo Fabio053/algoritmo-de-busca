@@ -7,3 +7,5 @@ gunicorn
 chromedriver-autoinstaller
 requests
 Flask
+chromium-browser
+chromedriver
