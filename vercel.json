@@ -4,7 +4,7 @@
       { "src": "busca-flask.py", "use": "@vercel/python" }
     ],
     "routes": [
-      { "src": "/(.*)", "dest": "busca-flask.py" }
+      { "src": "/", "dest": "busca-flask.py" }
     ]
   }
   
