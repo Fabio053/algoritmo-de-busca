@@ -4,3 +4,4 @@ webdriver-manager
 pandas
 uvicorn
 gunicorn
+chromedriver-autoinstaller
