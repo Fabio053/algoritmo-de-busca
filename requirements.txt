@@ -5,3 +5,5 @@ pandas
 uvicorn
 gunicorn
 chromedriver-autoinstaller
+requests 
+beautifulsoup4
