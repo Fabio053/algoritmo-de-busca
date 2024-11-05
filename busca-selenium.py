@@ -14,7 +14,7 @@ palavras_chave = [
     'exportação', 'safra', 'suzano', 'hidrovia', 'ferrovia', 'Combustível', 'custo de frete',
     'eldorado Mato Grosso do Sul', 'rota celulose',
     'ribas do rio pardo suzano', 'terminal intermodal pederneiras', 'hidrovia tiete',
-    'eldorado santos', 'eucalipto'
+    'eldorado santos', 'eucalipto', 'caminhoes', 'hexatrens', 'rodovia'
 ]
 
 # Lista de sites adicionais para pesquisa
