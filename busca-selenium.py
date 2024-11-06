@@ -1,20 +1,21 @@
 import streamlit as st
-from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
-from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.support import expected_conditions as EC
 
 # Configurando as palavras-chave
 palavras_chave = [
     'safra', 'madeira', 'celulose', 'bracell',
-    'exportação', 'safra', 'suzano', 'hidrovia', 'ferrovia', 'Combustível', 'custo de frete',
-    'eldorado Mato Grosso do Sul', 'rota celulose',
-    'ribas do rio pardo suzano', 'terminal intermodal pederneiras', 'hidrovia tiete',
-    'eldorado santos', 'eucalipto', 'caminhoes', 'hexatrens', 'rodovia'
+    'exportação', 'hidrovia', 'ferrovia', 'custo de frete',
+    'eldorado Mato Grosso do Sul', 'suzano Três Lagoas', 'rota celulose',
+    'ribas do rio pardo suzano', 'terminal intermodal', 'hidrovia tiete',
+    'eucalipto', 'hexatrem', 'transporte de madeira', 'grãos', 'graneleiros',
+    'preço combustível'
 ]
 
 # Lista de sites adicionais para pesquisa
@@ -27,17 +28,10 @@ SITES_ADICIONAIS = [
 
 # Função para buscar notícias no Google
 def busca_noticias(palavra_chave, data_inicio, data_fim):
-    # Configurações para rodar o Chrome em modo headless
     options = Options()
     options.add_argument("--headless")  # Executa o navegador em segundo plano
-    options.add_argument("--no-sandbox")  # Necessário em alguns ambientes
-    options.add_argument("--disable-dev-shm-usage")  # Necessário em alguns ambientes
-    options.binary_location = "/usr/bin/chromium-browser"  # Defina o caminho do Chromium (caso não esteja no PATH)
-
-    # Usar o WebDriverManager para obter o ChromeDriver correto
     driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
 
-    # Formatação de datas
     data_inicio_formato = data_inicio.strftime('%Y-%m-%d')
     data_fim_formato = data_fim.strftime('%Y-%m-%d')
 
@@ -47,7 +41,6 @@ def busca_noticias(palavra_chave, data_inicio, data_fim):
     driver.get(url)
 
     try:
-        # Aguarda até que os resultados estejam disponíveis
         WebDriverWait(driver, 20).until(
             EC.presence_of_all_elements_located((By.CSS_SELECTOR, 'div.g'))
         )
@@ -62,7 +55,7 @@ def busca_noticias(palavra_chave, data_inicio, data_fim):
     if not resultados:
         st.warning(f"Nenhum resultado encontrado para '{palavra_chave}'.")
         driver.quit()
-        return [] 
+        return []
 
     for result in resultados:
         try:
