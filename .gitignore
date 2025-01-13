@@ -3,5 +3,6 @@ busca-selenium.py
 iniciar_app.py
 noticias.xlsx
 noticias_20250113_160627.xçsx
-.vscode
+./.vscode
 .ipynb_checkpoints
+./old
