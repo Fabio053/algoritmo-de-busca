@@ -7,6 +7,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from datetime import datetime, timedelta
 
 # Configurando as palavras-chave
 palavras_chave = [
@@ -24,6 +25,12 @@ SITES_ADICIONAIS = [
     'site:portosenavios.com.br',
     'site:clickpetroleoegas.com.br',
     'site:g1.globo.com',
+]
+
+# Lista de palavras indesejadas
+palavras_indesejadas = [
+    'futebol', 'celebridades', 'entretenimento', 'fofoca', 'esporte', 'atropelado', 'idoso', 'suspeito', 'sobrevive', 'agredido',
+    'coma', 
 ]
 
 # Função para buscar notícias no Google
@@ -66,8 +73,10 @@ def busca_noticias(palavra_chave, data_inicio, data_fim):
                 titulo = titulo_element.text
                 link = link_element.get_attribute('href')
 
-                if link and "google" not in link:
-                    noticias.append({"Título": titulo, "Link": link})
+                # Verificação das palavras indesejadas
+                if not any(palavra in titulo.lower() for palavra in palavras_indesejadas):
+                    if link and "google" not in link:
+                        noticias.append({"Título": titulo, "Link": link})
         except Exception as e:
             st.error(f"Erro ao processar o resultado: {str(e)}")
             continue
@@ -75,13 +84,18 @@ def busca_noticias(palavra_chave, data_inicio, data_fim):
     driver.quit()
     return noticias
 
+# Calculando as datas padrão (2 dias antes e 1 dia depois de hoje)
+hoje = datetime.today()
+data_inicio_default = hoje - timedelta(days=2)
+data_fim_default = hoje + timedelta(days=1)
+
 # Interface no Streamlit
 st.title("Busca de Notícias")
 
 palavras_selecionadas = st.multiselect("Selecione as palavras-chave:", palavras_chave)
 nova_palavra = st.text_input("Adicione uma nova palavra-chave (opcional):")
-data_inicio = st.date_input("Data de Início", pd.to_datetime("2024-01-01"))
-data_fim = st.date_input("Data de Fim", pd.to_datetime("2024-12-31"))
+data_inicio = st.date_input("Data de Início", data_inicio_default)
+data_fim = st.date_input("Data de Fim", data_fim_default)
 
 if st.button("Buscar Notícias"):
     if nova_palavra:
