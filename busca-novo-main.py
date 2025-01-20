@@ -1,3 +1,4 @@
+import re #expressões regulaer \b
 import pandas as pd
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -66,16 +67,27 @@ def busca_noticias(palavra_chave, data_inicio, data_fim):
     for result in resultados:
         try:
             titulo_element = result.find_element(By.TAG_NAME, 'h3')
+            
+            # Verificando se a descrição está presente, adicionando try-except
+            try:
+                descricao_element = result.find_element(By.CSS_SELECTOR, 'div.IsZvec')
+                descricao = descricao_element.text.lower()
+            except Exception:
+                descricao = ''
+
             link_element = result.find_element(By.TAG_NAME, 'a')
 
             if titulo_element and link_element:
-                titulo = titulo_element.text
+                titulo = titulo_element.text.lower()
                 link = link_element.get_attribute('href')
 
-                # Verificação das palavras indesejadas
-                if not any(palavra in titulo.lower() for palavra in palavras_indesejadas):
-                    if link and "google" not in link:
-                        noticias.append({"Título": titulo, "Link": link})
+                # Verificando se a palavra-chave está presente no título ou na descrição
+                if any(re.search(rf"\b{palavra_chave.lower()}\b", titulo) or re.search(rf"\b{palavra_chave.lower()}\b", descricao) for palavra_chave in palavras_chave):
+
+                    # Filtrando notícias com palavras indesejadas
+                    if not any(re.search(rf"\b{indesejada}\b", titulo) or re.search(rf"\b{indesejada}\b", descricao) for indesejada in palavras_indesejadas):
+                        if link and "google" not in link:
+                            noticias.append({"Título": titulo_element.text, "Link": link})
         except Exception as e:
             print(f"Erro ao processar o resultado: {str(e)}")
             continue
@@ -95,7 +107,6 @@ if nova_palavra:
 
 data_inicio = input(f"Data de Início (formato AAAA-MM-DD, padrão {data_inicio_default.strftime('%Y-%m-%d')}): ")
 data_fim = input(f"Data de Fim (formato AAAA-MM-DD, padrão {data_fim_default.strftime('%Y-%m-%d')}): ")
-
 data_inicio = datetime.strptime(data_inicio, '%Y-%m-%d') if data_inicio else data_inicio_default
 data_fim = datetime.strptime(data_fim, '%Y-%m-%d') if data_fim else data_fim_default
 
