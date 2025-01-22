@@ -80,7 +80,7 @@ def busca_noticias(palavra_chave, data_inicio, data_fim):
                 titulo = titulo_element.text.lower()
                 link = link_element.get_attribute('href')
 
-                # Ajuste na verificação de palavras-chave (mais simples e flexível)
+                # Ajuste na verificação de palavras-chave
                 if any(palavra_chave.lower() in titulo or palavra_chave.lower() in descricao for palavra_chave in palavras_chave):
                     if not any(re.search(rf"\b{indesejada}\b", titulo) or re.search(rf"\b{indesejada}\b", descricao) for indesejada in palavras_indesejadas):
                         if link and "google" not in link:
@@ -102,11 +102,7 @@ hoje = datetime.today()
 data_inicio_default = hoje - timedelta(days=7)
 data_fim_default = hoje + timedelta(days=1)
 
-# Coletando palavras-chave e datas
-nova_palavra = input("Adicione uma nova palavra-chave (opcional): ").strip()
-if nova_palavra:
-    palavras_chave.append(nova_palavra)
-
+# Coletando datas
 data_inicio = input(f"Data de Início (formato AAAA-MM-DD, padrão {data_inicio_default.strftime('%Y-%m-%d')}): ")
 data_fim = input(f"Data de Fim (formato AAAA-MM-DD, padrão {data_fim_default.strftime('%Y-%m-%d')}): ")
 data_inicio = datetime.strptime(data_inicio, '%Y-%m-%d') if data_inicio else data_inicio_default
