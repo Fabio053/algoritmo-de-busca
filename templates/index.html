@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/fonte.css">
+
+    <title>ViaRondon</title>
+</head>
+<body>
+    <header>
+        <div class="faixa-branca">
+            <div class="logo">
+                <img src="/images/VIARONDON.jpg" alt="Via-Rondon" />
+            </div>
+        </div>
+        <div class="topo">
+        </div>
+    </header>
+
+    <main>
+        <h1>Formulário de Pesquisa</h1>
+        <div class="container-pai">
+            <form action="/enviar" method="POST">
+                <div class="data-geral">
+                    <div>
+                        <h2 class="data-inicio">Data Inicio</h2>
+                            <input class="calendario1" type="date" id="data1" name="data-inicio" required><br><br>
+                    </div>
+                    <div>
+                        <h2 class="data-fim">Data Fim</h2>
+                            <input class="calendario2" type="date" id="data2" name="data-fim" required><br><br>
+                    </div>
+                </div>
+                <div class="botao">
+                    <button type="submit" class="btn">Pesquisar</button>
+                </div>
+            </form>
+        </div>
+    
+    </main>
+
+    <footer>
+
+    </footer>
+    
+</body>
+</html>
