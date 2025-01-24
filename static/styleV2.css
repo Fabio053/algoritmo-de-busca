@@ -1,113 +1,109 @@
 .faixa-branca{
-    width: 100%;           /* Largura da div ocupa 100% da tela */
-    height: 150px;         /* Define uma altura fixa */
-    background-color: white; /* Apenas para visualização */
+    width: 100%;                /* Largura da div ocupa 100% da tela */
+    height: 150px;              /* Define uma altura fixa de 150px */
+    background-color: white;  /* Adiciona um fundo branco no topo da interface */
 }
 
 body{
-    background-image: url('/images/bg-slider.png');
-    background-size: cover; /* A imagem cobre toda a área da div */
-    background-repeat: no-repeat; /* A imagem não se repete */
+    background-image: url('/images/bg-slider.png'); /*Adiciona um fundo ao body da interface*/
+    background-size: cover;                         /* A imagem cobre toda a área da div */
+    background-repeat: no-repeat;                   /* A imagem não se repete */
 }
 
 .topo{
-    width: 100%;
-    height: 100px;
-    background-image: url(/images/bg-top-cut.png);
-    background-size: cover;
-    background-repeat: no-repeat;
+    width: 100%;                                    /* Largura da div ocupa 100% da tela */
+    height: 100px;                                  /* Define uma altura fixa de 100px */
+    background-image: url(/images/bg-top-cut.png);  /*Adiciona um fundo ao body da interface*/
+    background-size: cover;                         /* A imagem cobre toda a área da div */
+    background-repeat: no-repeat;                   /* A imagem não se repete */
 }
 
 .logo{
-    text-align: center;           /* Alinha o texto dentro do header ao centro. */
-    max-width: 600px;             /* Define a largura máxima do header como 600px. A largura do header não pode ultrapassar 600px. */
-    width: 100%;                  /* Define a largura do header */
-    height: 150px;                /* Define a altura do logo*/
-    margin: auto;                 /* Centraliza o header horizontalmente. Ao definir margem automática nas laterais, a div (ou qualquer outro elemento de bloco) será centralizada. */
-    margin-bottom: 10px;
+    text-align: center;           /* Alinha o texto dentro do logo ao centro. */
+    max-width: 600px;             /* Define a largura máxima do logo como 600px */
+    width: 100%;                  /* Define a largura do logo */
+    height: 150px;                /* Define a altura do logo */
+    margin: auto;                 /* Centraliza o logo horizontalmente */
 }
 
 header img {
-    width: 80%; /* A imagem vai ter 80% da largura da div */
-    height: 100%; /* A imagem vai ter 100% da altura da div */
-    object-fit: cover; /* Faz a imagem cobrir toda a div sem distorcer */
+    width: 80%;         /* A imagem vai ter 80% da largura da div */
+    height: 100%;       /* A imagem vai ter 100% da altura da div */
+    object-fit: cover;  /* Faz a imagem cobrir toda a div sem distorcer */
 }
 
 main{
-    align-items: center;
-    max-width: 600px;
-    min-height: 400px;
-    width: 100%;
-    margin: auto;
-    border: 1px solid green;
-    border-radius: 15px;
-    box-shadow: 5px 5px 10px rgba(128, 128, 128, 0.5);
-    background-color: white;
+    max-width: 600px;                                       /* Define a largura máxima da div como 600px */
+    min-height: 400px;                                      /* Define a altura minima da div como 400px*/
+    width: 100%;                                            /* Largura da div ocupa 100% da tela */
+    margin: auto;                                           /* Centraliza a div horizontalmente */
+    border: 1px solid green;                              /* Adiciona um borda de 1px verde envolta da div */
+    border-radius: 15px;                                    /* Aredonda a borda da div em 15px */
+    box-shadow: 5px 5px 10px rgba(128, 128, 128, 0.5);    /* Adiciona sombras nas laterais da div com 0.5 de transparencia */
+    background-color: white;                              /* Adiciona um fundo branco a div */
 }
 
 main h1{
-    text-align: center;
-    border: 1px solid green;;
-    background-color: rgba(255, 255, 255, 0.5);
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
-    border-radius: 15px;
-    box-shadow: 5px 5px 10px rgba(128, 128, 128, 0.5);
+    text-align: center;                                     /* Alinha o texto dentro do logo ao centro. */
+    border: 1px solid green;                              /* Adiciona um borda de 1px verde envolta da div */
+    background-color: rgba(255, 255, 255, 0.5);           /* Muda a cor do fundo para um cinza com 0.5 de transparencia */
+    width: 70%;                                             /* Largura da div ocupa 70% da tela */
+    margin-left: auto;                                      /* Centraliza a div horizontalmente */
+    margin-right: auto;                                     /* Centraliza a div horizontalmente */
+    border-radius: 15px;                                    /* Aredonda a borda da div em 15px */
+    box-shadow: 5px 5px 10px rgba(128, 128, 128, 0.5);    /* Adiciona sombras nas laterais da div com 0.5 de transparencia */
 }
 
 .formulario{
-    text-align: center;
+    text-align: center; /* Alinha o texto dentro do logo ao centro. */
 }
 
 .btn{
-    margin-top: 50px;
-    margin-bottom: 25px;
-    width: 200px;
-    height: 50px;
-    font-size: 25px;
-    justify-content: center;
-    cursor: pointer;
-    font-family: Georgia, serif;
-    background-color: rgba(255, 255, 255, 0.9);
-    box-shadow: 5px 5px 10px rgba(128, 128, 128, 0.5);
-    border-radius: 15px;
-    border: 1px solid green;
+    margin-top: 50px;                                           /* Adiciona uma margem de 50px acima do btn */
+    margin-bottom: 25px;                                        /* Adiciona uma margem de 25px abaixo do btn */
+    width: 200px;                                               /* Largura da div ocupa 200px da tela */
+    height: 50px;                                               /* Altura da div ocupa 50px da tela */
+    font-size: 25px;                                            /* Muda o tamanho da fonte para 25px */
+    cursor: pointer;                                            /* Muda o cursor ao colocar o mouse dentro do btn */
+    background-color: rgba(255, 255, 255, 0.9);               /* Adiciona um fundo branco com transparencia 0.9 no btn */
+    box-shadow: 5px 5px 10px rgba(128, 128, 128, 0.5);        /* Adiciona sombras nas laterais do btn com 0.5 de transparencia */
+    border-radius: 15px;                                        /* Aredonda a borda do btn em 15px */
+    border: 1px solid green;                                  /* Adiciona um borda de 1px verde envolta do btn */
 }
 
 .data-geral{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-around;
-    text-align: center;
+    display: flex;                      /* Define o container como um flex container */
+    flex-direction: row;                /* Organiza os itens do container na horizontal */
+    flex-wrap: nowrap;                  /* Mantem os intens do container na mesma div */
+    justify-content: space-around;      /* Distribui os itens igualmente no container */
+    text-align: center;                 /* Alinha o texto ao centro. */
 }
 
 .botao{
-    text-align: center;
-    width: 35%;
-    height: 35%;
-    margin-left: auto;
-    margin-right: auto;
+    text-align: center;     /* Alinha o texto dentro do logo ao centro. */
+    width: 35%;             /* Largura da div ocupa 35% da tela */
+    height: 35%;            /* Altura da div ocupa 35% da tela */
+    margin-left: auto;      /* Centraliza a div horizontalmente */
+    margin-right: auto;     /* Centraliza a div horizontalmente */
 }
 
 .calendario1, .calendario2{
-    font-size: 20px;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 15px;
-    border: 1px solid green;
+    font-size: 20px;                                  /* Muda o tamanho da fonte para 20px */
+    background-color: rgb(255, 255, 255);           /* Adiciona um fundo branco */
+    border-radius: 15px;                              /* Arredonda a borda da div em 15px */
+    border: 1px solid green;                        /* Adiciona uma borda verde de 1px */
 }
 
 .data-inicio, .data-fim{
-    background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 5px 5px 10px rgba(128, 128, 128, 0.5);   
-    border-radius: 15px;
-    border: 1px solid green;
+    background-color: rgba(255, 255, 255, 0.8);             /* Adiciona um fundo branco com transparencia 0.8*/
+    box-shadow: 5px 5px 10px rgba(128, 128, 128, 0.5);      /* Adiciona sombras nas laterais do btn com 0.5 de transparencia */
+    border-radius: 15px;                                      /* Aredonda a borda da div em 15px */
+    border: 1px solid green;                                /* Adiciona uma borda verde de 1px */
 }
 
 .checkbox-geral{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    justify-content: space-around;
+    display: flex;                      /* Define o container como um flex container */
+    flex-direction: row;                /* Organiza os itens do container na horizontal */
+    flex-wrap: nowrap;                  /* Mantem os intens do container na mesma div */
+    justify-content: space-around;      /* Distribui os itens igualmente no container */
 }
